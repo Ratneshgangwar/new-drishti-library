@@ -3,7 +3,7 @@ import axios from "axios";
 const api = axios.create({
   baseURL:
     import.meta.env.VITE_API_URL ||
-    "http://localhost:5000/api",
+    "https://new-drishti-library.onrender.com/api",
 
   timeout: 20000,
 });
@@ -16,10 +16,9 @@ const api = axios.create({
 
 api.interceptors.request.use(
   (config) => {
-    const token =
-      localStorage.getItem(
-        "library_token",
-      );
+    const token = localStorage.getItem(
+      "library_token",
+    );
 
     if (token) {
       config.headers.Authorization =
@@ -35,25 +34,17 @@ api.interceptors.request.use(
      * multipart/form-data; boundary=...
      */
 
-    if (
-      config.data instanceof FormData
-    ) {
-      delete config.headers[
-        "Content-Type"
-      ];
-      delete config.headers[
-        "content-type"
-      ];
+    if (config.data instanceof FormData) {
+      delete config.headers["Content-Type"];
+      delete config.headers["content-type"];
     } else {
-      config.headers[
-        "Content-Type"
-      ] = "application/json";
+      config.headers["Content-Type"] =
+        "application/json";
     }
 
     return config;
   },
-  (error) =>
-    Promise.reject(error),
+  (error) => Promise.reject(error),
 );
 
 /*
@@ -66,9 +57,7 @@ api.interceptors.response.use(
   (response) => response,
 
   (error) => {
-    if (
-      error.response?.status === 401
-    ) {
+    if (error.response?.status === 401) {
       /*
        * Do not automatically redirect
        * from registration/login requests.
