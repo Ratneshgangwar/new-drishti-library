@@ -1,131 +1,98 @@
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
+const path = require("path");
+const bcrypt = require("bcryptjs");
 
 const Student = require("../models/Student");
-const { hashPassword } = require("./auth");
 
-dotenv.config();
+dotenv.config({
+  path: path.join(__dirname, "..", ".env"),
+});
 
 const seedAdmin = async () => {
   try {
-    console.log("=================================");
-    console.log("Starting admin seed...");
-    console.log("=================================");
-
-    // ==========================================
-    // CHECK ENV
-    // ==========================================
-
-    const adminEmail = process.env.ADMIN_EMAIL;
-    const adminPassword = process.env.ADMIN_PASSWORD;
-
-    if (!adminEmail) {
-      throw new Error("ADMIN_EMAIL is missing in .env");
+    if (!process.env.MONGODB_URI) {
+      throw new Error(
+        "MONGODB_URI is not defined in server/.env"
+      );
     }
 
-    if (!adminPassword) {
-      throw new Error("ADMIN_PASSWORD is missing in .env");
+    if (!process.env.ADMIN_EMAIL) {
+      throw new Error(
+        "ADMIN_EMAIL is not defined in server/.env"
+      );
     }
 
-    console.log("Admin email:", adminEmail);
-    console.log("Admin password exists:", !!adminPassword);
-
-    // ==========================================
-    // CONNECT MONGODB
-    // ==========================================
+    if (!process.env.ADMIN_PASSWORD) {
+      throw new Error(
+        "ADMIN_PASSWORD is not defined in server/.env"
+      );
+    }
 
     await mongoose.connect(process.env.MONGODB_URI);
 
-    console.log("MongoDB connected for admin seeding");
+    console.log("MongoDB connected.");
+    console.log("Checking admin account...\n");
 
-    // ==========================================
-    // CHECK EXISTING ADMIN
-    // ==========================================
+    const email = process.env.ADMIN_EMAIL
+      .trim()
+      .toLowerCase();
 
     const existingAdmin = await Student.findOne({
-      email: adminEmail.toLowerCase(),
+      email,
       role: "admin",
     });
 
     if (existingAdmin) {
       console.log("=================================");
-      console.log("Admin account already exists.");
-      console.log("Email:", existingAdmin.email);
-      console.log("Role:", existingAdmin.role);
+      console.log("ADMIN ALREADY EXISTS");
+      console.log("=================================");
+      console.log(`Email: ${email}`);
+      console.log(`Student ID: ${existingAdmin.studentId}`);
+      console.log("Role: admin");
       console.log("=================================");
 
       await mongoose.connection.close();
-
       process.exit(0);
     }
 
-    // ==========================================
-    // HASH PASSWORD
-    // ==========================================
-
-    const hashedPassword = await hashPassword(
-      adminPassword
+    const hashedPassword = await bcrypt.hash(
+      process.env.ADMIN_PASSWORD,
+      12
     );
 
-    // ==========================================
-    // CREATE ADMIN
-    // ==========================================
-
     const admin = await Student.create({
-      studentId: `ADMIN${Date.now()}`,
-
+      studentId: "ADMIN001",
       fullName: "Library Administrator",
-
-      mobile: "6394468584",
-
-      email: adminEmail.toLowerCase(),
-
+      email,
       password: hashedPassword,
-
+      mobile: "9999999999",
       fatherName: "Library Administration",
-
-      motherName: "",
-
-      address: "Drishti Library",
-
-      course: "Administration",
-
+      address: "New Drishti Library",
       role: "admin",
-
-      accountStatus: "active",
     });
 
     console.log("=================================");
-    console.log("Admin account created successfully");
+    console.log("ADMIN CREATED SUCCESSFULLY");
     console.log("=================================");
-    console.log("Admin ID:", admin.studentId);
-    console.log("Admin Email:", admin.email);
-    console.log("Role:", admin.role);
-    console.log("Account Status:", admin.accountStatus);
+    console.log(`Name: ${admin.fullName}`);
+    console.log(`Email: ${admin.email}`);
+    console.log(`Student ID: ${admin.studentId}`);
+    console.log("Role: admin");
     console.log("=================================");
 
     await mongoose.connection.close();
-
     process.exit(0);
   } catch (error) {
-    console.error("=================================");
-    console.error("ADMIN SEED ERROR");
-    console.error("=================================");
+    console.error("Error seeding admin:");
     console.error(error);
-    console.error("=================================");
 
     try {
       await mongoose.connection.close();
-    } catch (closeError) {
-      // Ignore connection close error
-    }
+    } catch {}
 
     process.exit(1);
   }
 };
-
-// ==========================================
-// START SEEDER
-// ==========================================
 
 seedAdmin();
