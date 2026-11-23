@@ -1,251 +1,257 @@
 import { useEffect, useRef, useState } from "react";
-
 import { Link } from "react-router-dom";
-
 import "../index.css";
 
+/* =========================================================
+   SLIDES DATA
+========================================================= */
 const slides = [
   {
     image:
       "https://images.unsplash.com/photo-1521587760476-6c12a4b040da?auto=format&fit=crop&w=1800&q=90",
-
     eyebrow: "A BETTER PLACE TO STUDY",
-
     title: "Your Dreams Deserve a Place to Grow",
-
     subtitle:
       "Step into a peaceful study environment where every focused hour brings you closer to the future you imagine.",
   },
-
   {
     image:
       "https://images.unsplash.com/photo-1507842217343-583bb7270b66?auto=format&fit=crop&w=1800&q=90",
-
     eyebrow: "FOCUS • LEARN • ACHIEVE",
-
     title: "Focus Today. Succeed Tomorrow.",
-
     subtitle:
       "Leave distractions behind, open your books and give your goals the attention they deserve.",
   },
-
   {
     image:
       "https://images.unsplash.com/photo-1495446815901-a7297e633e8d?auto=format&fit=crop&w=1800&q=90",
-
     eyebrow: "YOUR JOURNEY STARTS HERE",
-
     title: "Every Page Takes You One Step Further",
-
     subtitle:
       "Build your preparation one chapter, one hour and one determined day at a time at New Drishti Library.",
   },
 ];
 
+/* =========================================================
+   SERVICES DATA
+========================================================= */
 const services = [
   {
     icon: "📚",
-
     title: "Dedicated Study Seats",
-
     text: "Comfortable individual seating designed for long and distraction-free study sessions.",
   },
-
   {
     icon: "💧",
-
     title: "Cool Drinking Water",
-
     text: "Clean and cool drinking water available for students throughout their study hours.",
   },
-
   {
     icon: "🥤",
-
     title: "Refreshment Area",
-
     text: "A dedicated refreshment space where you can take a short break and recharge.",
   },
-
   {
     icon: "🍱",
-
     title: "Lunch Area",
-
     text: "A separate lunch and meal area so you can enjoy your break comfortably.",
   },
-
   {
     icon: "📰",
-
     title: "Daily Newspaper",
-
     text: "Stay updated with daily news and current affairs while preparing for your goals.",
   },
-
   {
     icon: "📶",
-
     title: "High-Speed Wi-Fi",
-
     text: "Reliable internet access for online classes, research and digital study material.",
   },
-
   {
     icon: "❄️",
-
     title: "Comfortable Environment",
-
     text: "A peaceful, clean and comfortable atmosphere designed to keep you focused.",
   },
-
   {
     icon: "🔌",
-
     title: "Charging Facility",
-
     text: "Convenient charging access for your mobile, laptop and other study devices.",
   },
-
   {
     icon: "🔒",
-
     title: "Safe & Secure",
-
     text: "A disciplined and secure environment where you can concentrate on your preparation.",
   },
 ];
 
+/* =========================================================
+   TIMINGS DATA
+========================================================= */
 const timings = [
   {
     time: "08:00 AM – 02:00 PM",
-
     title: "Morning Shift",
-
     text: "Start your day with a fresh and focused six-hour study session.",
   },
-
   {
     time: "02:00 PM – 08:00 PM",
-
     title: "Evening Shift",
-
     text: "Continue your preparation in a calm and productive six-hour environment.",
   },
-
   {
     time: "08:00 PM – 08:00 AM",
-
     title: "Night Shift",
-
     text: "A dedicated twelve-hour study slot for students who prefer late-night preparation.",
   },
 ];
 
+/* =========================================================
+   PRICING PLANS — UPGRADED
+========================================================= */
 const plans = [
   {
     type: "NORMAL SEAT",
-
     title: "Normal Seat",
-
-    price: "Contact for Price",
-
+    price: "₹800",
+    period: "/ month",
     description:
       "A comfortable dedicated study seat with all essential library facilities.",
-
     features: [
       "Dedicated study seat",
-
       "24×7 library access",
-
       "Cool drinking water",
-
       "Refreshment area",
-
       "Lunch area",
-
       "Daily newspaper",
-
       "Wi-Fi facility",
-
       "Charging facility",
     ],
+    cta: "Book Normal Seat",
   },
-
   {
     type: "SPECIAL SEAT",
-
     title: "Special Seat",
-
-    price: "Contact for Price",
-
+    price: "₹1200",
+    period: "/ month",
     description:
       "A premium seat option for students looking for an enhanced personal study experience.",
-
     features: [
       "Premium dedicated seat",
-
       "24×7 library access",
-
       "Cool drinking water",
-
       "Refreshment area",
-
       "Lunch area",
-
       "Daily newspaper",
-
       "Wi-Fi facility",
-
       "Charging facility",
+      "Priority seat selection",
     ],
-
     featured: true,
+    cta: "Book Special Seat",
   },
 ];
 
+/* =========================================================
+   NAV ITEMS
+========================================================= */
 const navItems = [
   ["home", "Home"],
-
   ["services", "Services"],
-
   ["pricing", "Pricing"],
-
+  ["gallery", "Gallery"],
   ["about", "About"],
-
   ["contact", "Contact"],
 ];
 
+/* =========================================================
+   GALLERY PHOTOS
+========================================================= */
+const galleryPhotos = [
+  {
+    image:
+      "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=900&q=80",
+    category: "Study Space",
+    title: "Quiet Reading Area",
+  },
+  {
+    image:
+      "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=900&q=80",
+    category: "Comfort",
+    title: "Comfortable Seating",
+  },
+  {
+    image:
+      "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=900&q=80",
+    category: "Focus",
+    title: "Disciplined Learning Zone",
+  },
+  {
+    image:
+      "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=900&q=80",
+    category: "Environment",
+    title: "Clean Study Environment",
+  },
+  {
+    image:
+      "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=900&q=80",
+    category: "Preparation",
+    title: "Daily Study Routine",
+  },
+  {
+    image:
+      "https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?auto=format&fit=crop&w=900&q=80",
+    category: "Success",
+    title: "Your Path to Success",
+  },
+];
+
+/* =========================================================
+   WHY CHOOSE US DATA
+========================================================= */
+const whyChooseUs = [
+  {
+    icon: "🎯",
+    title: "Discipline & Focus",
+    text: "A strict, silent and disciplined environment that keeps you on track.",
+  },
+  {
+    icon: "🕐",
+    title: "24×7 Access",
+    text: "Study whenever you want — morning, evening or late night.",
+  },
+  {
+    icon: "💰",
+    title: "Affordable Pricing",
+    text: "Premium facilities at student-friendly prices with no hidden charges.",
+  },
+  {
+    icon: "👥",
+    title: "Student Community",
+    text: "Study alongside serious aspirants who motivate you every day.",
+  },
+];
+
+/* =========================================================
+   HOME COMPONENT
+========================================================= */
 export default function Home() {
   const [currentSlide, setCurrentSlide] = useState(0);
-
   const [menuOpen, setMenuOpen] = useState(false);
-
   const [activeSection, setActiveSection] = useState("home");
-
   const revealRefs = useRef([]);
 
+  /* ---------- USER ROLE ---------- */
   const getUserRole = () => {
-    if (localStorage.getItem("library_admin_token")) {
-      return "admin";
-    }
-
-    if (localStorage.getItem("library_token")) {
-      return "student";
-    }
-
+    if (localStorage.getItem("library_admin_token")) return "admin";
+    if (localStorage.getItem("library_token")) return "student";
     return "guest";
   };
 
   const [userRole, setUserRole] = useState(getUserRole);
 
   useEffect(() => {
-    const syncUserRole = () => {
-      setUserRole(getUserRole());
-    };
+    const syncUserRole = () => setUserRole(getUserRole());
 
     syncUserRole();
-
     window.addEventListener("storage", syncUserRole);
     window.addEventListener("focus", syncUserRole);
     window.addEventListener("auth-changed", syncUserRole);
@@ -264,6 +270,7 @@ export default function Home() {
   const dashboardPath =
     userRole === "admin" ? "/admin/dashboard" : "/dashboard";
 
+  /* ---------- AUTO SLIDE ---------- */
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % slides.length);
@@ -272,9 +279,9 @@ export default function Home() {
     return () => clearInterval(timer);
   }, []);
 
+  /* ---------- REVEAL OBSERVER ---------- */
   useEffect(() => {
     const elements = revealRefs.current.filter(Boolean);
-
     if (!elements.length) return undefined;
 
     const observer = new IntersectionObserver(
@@ -282,51 +289,40 @@ export default function Home() {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             entry.target.classList.add("nd-visible");
-
             observer.unobserve(entry.target);
           }
         });
       },
-
-      {
-        threshold: 0.12,
-      },
+      { threshold: 0.12 },
     );
 
     elements.forEach((element) => observer.observe(element));
-
     return () => observer.disconnect();
   }, []);
 
+  /* ---------- ACTIVE SECTION ---------- */
   useEffect(() => {
     const sections = navItems
-
       .map(([id]) => document.getElementById(id))
-
       .filter(Boolean);
 
     const observer = new IntersectionObserver(
       (entries) => {
         const visibleSections = entries
-
           .filter((entry) => entry.isIntersecting)
-
           .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
 
         if (visibleSections[0]) {
           setActiveSection(visibleSections[0].target.id);
         }
       },
-
       {
         rootMargin: "-25% 0px -55% 0px",
-
         threshold: [0.05, 0.2, 0.5],
       },
     );
 
     sections.forEach((section) => observer.observe(section));
-
     return () => observer.disconnect();
   }, []);
 
@@ -336,25 +332,18 @@ export default function Home() {
     }
   };
 
-  const nextSlide = () => {
-    setCurrentSlide((prev) => (prev + 1) % slides.length);
-  };
+  const nextSlide = () => setCurrentSlide((prev) => (prev + 1) % slides.length);
 
-  const previousSlide = () => {
+  const previousSlide = () =>
     setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
-  };
 
-  const closeMenu = () => {
-    setMenuOpen(false);
-  };
+  const closeMenu = () => setMenuOpen(false);
 
   const scrollToSection = (id) => {
     closeMenu();
-
     requestAnimationFrame(() => {
       document.getElementById(id)?.scrollIntoView({
         behavior: "smooth",
-
         block: "start",
       });
     });
@@ -371,7 +360,6 @@ export default function Home() {
   return (
     <div className="nd-library-page">
       {/* ================= NAVBAR ================= */}
-
       <header className={`nd-navbar ${menuOpen ? "nd-navbar-open" : ""}`}>
         <div className="nd-navbar-inner">
           <Link to="/" className="nd-logo" onClick={closeMenu}>
@@ -390,7 +378,6 @@ export default function Home() {
 
             <span className="nd-logo-text">
               <strong>New Drishti</strong>
-
               <small>LIBRARY</small>
             </span>
           </Link>
@@ -406,7 +393,6 @@ export default function Home() {
                 className={activeSection === id ? "active" : ""}
                 onClick={(event) => {
                   event.preventDefault();
-
                   scrollToSection(id);
                 }}
               >
@@ -431,7 +417,6 @@ export default function Home() {
                 >
                   Login
                 </Link>
-
                 <Link
                   to="/login"
                   className="nd-mobile-book"
@@ -453,7 +438,6 @@ export default function Home() {
                 <Link to="/login" className="nd-login-btn">
                   Login
                 </Link>
-
                 <Link to="/login" className="nd-book-btn">
                   Book Your Seat <span>→</span>
                 </Link>
@@ -469,9 +453,7 @@ export default function Home() {
             aria-expanded={menuOpen}
           >
             <span />
-
             <span />
-
             <span />
           </button>
         </div>
@@ -479,7 +461,6 @@ export default function Home() {
 
       <main>
         {/* ================= HERO ================= */}
-
         <section id="home" className="nd-hero">
           {slides.map((slide, index) => (
             <div
@@ -487,9 +468,7 @@ export default function Home() {
               className={`nd-slide ${
                 index === currentSlide ? "nd-slide-active" : ""
               }`}
-              style={{
-                backgroundImage: `url("${slide.image}")`,
-              }}
+              style={{ backgroundImage: `url("${slide.image}")` }}
               aria-hidden={index !== currentSlide}
             >
               <div className="nd-hero-overlay" />
@@ -521,9 +500,7 @@ export default function Home() {
 
             <div className="nd-hero-counter">
               <span>{String(currentSlide + 1).padStart(2, "0")}</span>
-
               <i />
-
               <span>{String(slides.length).padStart(2, "0")}</span>
             </div>
 
@@ -547,9 +524,7 @@ export default function Home() {
 
             <div className="nd-hero-trust">
               <span>✓ 225 Seats</span>
-
               <span>✓ 24×7 Library</span>
-
               <span>✓ Student Focused</span>
             </div>
           </div>
@@ -568,13 +543,11 @@ export default function Home() {
 
           <div className="nd-scroll-indicator">
             <span>Scroll to explore</span>
-
             <div>↓</div>
           </div>
         </section>
 
         {/* ================= INTRO ================= */}
-
         <section className="nd-intro">
           <div
             ref={addRevealRef}
@@ -582,7 +555,6 @@ export default function Home() {
           >
             <div>
               <span className="nd-section-label">YOUR STUDY SPACE</span>
-
               <h2>
                 Where <span>Focus</span> Meets Opportunity
               </h2>
@@ -594,12 +566,10 @@ export default function Home() {
                 It is a dedicated environment created for students who are
                 serious about their future.
               </p>
-
               <p>
                 Come with a goal, choose your seat and give your preparation the
                 time and attention it deserves.
               </p>
-
               <button
                 type="button"
                 className="nd-text-link"
@@ -612,46 +582,35 @@ export default function Home() {
         </section>
 
         {/* ================= STATS ================= */}
-
         <section className="nd-stats">
           <div className="nd-section-container nd-stats-grid">
             <div className="nd-stat">
               <strong>225</strong>
-
               <span>Study Seats</span>
             </div>
-
             <div className="nd-stat">
               <strong>24×7</strong>
-
               <span>Library Access</span>
             </div>
-
             <div className="nd-stat">
               <strong>3</strong>
-
               <span>Study Shifts</span>
             </div>
-
             <div className="nd-stat">
               <strong>1</strong>
-
               <span>Goal — Your Success</span>
             </div>
           </div>
         </section>
 
         {/* ================= FACILITIES ================= */}
-
         <section id="services" className="nd-services">
           <div className="nd-section-container">
             <div ref={addRevealRef} className="nd-section-heading nd-reveal">
               <span className="nd-section-label">OUR FACILITIES</span>
-
               <h2>
                 Everything You Need to <span>Study Better</span>
               </h2>
-
               <p>
                 From comfortable seats to daily newspapers and refreshments, New
                 Drishti Library is designed around your study needs.
@@ -664,20 +623,14 @@ export default function Home() {
                   ref={addRevealRef}
                   className="nd-service-card nd-reveal"
                   key={service.title}
-                  style={{
-                    "--nd-delay": `${index * 70}ms`,
-                  }}
+                  style={{ "--nd-delay": `${index * 70}ms` }}
                 >
                   <div className="nd-service-top">
                     <div className="nd-service-icon">{service.icon}</div>
-
                     <span>0{index + 1}</span>
                   </div>
-
                   <h3>{service.title}</h3>
-
                   <p>{service.text}</p>
-
                   <div className="nd-card-line" />
                 </div>
               ))}
@@ -685,17 +638,45 @@ export default function Home() {
           </div>
         </section>
 
-        {/* ================= TIMINGS ================= */}
+        {/* ================= WHY CHOOSE US ================= */}
+        <section className="nd-why-us">
+          <div className="nd-section-container">
+            <div ref={addRevealRef} className="nd-section-heading nd-reveal">
+              <span className="nd-section-label">WHY CHOOSE US</span>
+              <h2>
+                Built for <span>Serious Students</span>
+              </h2>
+              <p>
+                Everything at New Drishti Library is designed to help you stay
+                consistent, focused and motivated.
+              </p>
+            </div>
 
+            <div className="nd-why-grid">
+              {whyChooseUs.map((item, index) => (
+                <div
+                  key={item.title}
+                  ref={addRevealRef}
+                  className="nd-why-card nd-reveal"
+                  style={{ "--nd-delay": `${index * 90}ms` }}
+                >
+                  <div className="nd-why-icon">{item.icon}</div>
+                  <h3>{item.title}</h3>
+                  <p>{item.text}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ================= TIMINGS ================= */}
         <section className="nd-timings">
           <div className="nd-section-container">
             <div ref={addRevealRef} className="nd-section-heading nd-reveal">
               <span className="nd-section-label">24×7 STUDY ACCESS</span>
-
               <h2>
                 Choose Your <span>Study Time</span>
               </h2>
-
               <p>
                 Study according to your routine with our three convenient time
                 slots.
@@ -708,16 +689,11 @@ export default function Home() {
                   ref={addRevealRef}
                   className="nd-timing-card nd-reveal"
                   key={item.title}
-                  style={{
-                    "--nd-delay": `${index * 100}ms`,
-                  }}
+                  style={{ "--nd-delay": `${index * 100}ms` }}
                 >
                   <div className="nd-timing-number">0{index + 1}</div>
-
                   <span className="nd-timing-label">{item.title}</span>
-
                   <h3>{item.time}</h3>
-
                   <p>{item.text}</p>
                 </div>
               ))}
@@ -731,16 +707,13 @@ export default function Home() {
         </section>
 
         {/* ================= PRICING ================= */}
-
         <section id="pricing" className="nd-pricing">
           <div className="nd-section-container">
             <div ref={addRevealRef} className="nd-section-heading nd-reveal">
               <span className="nd-section-label">MEMBERSHIP OPTIONS</span>
-
               <h2>
                 Choose Your <span>Seat</span>
               </h2>
-
               <p>
                 Select the study seat that suits your preparation and
                 requirements.
@@ -755,9 +728,7 @@ export default function Home() {
                     plan.featured ? "nd-price-featured" : ""
                   }`}
                   key={plan.title}
-                  style={{
-                    "--nd-delay": `${index * 120}ms`,
-                  }}
+                  style={{ "--nd-delay": `${index * 120}ms` }}
                 >
                   {plan.featured && (
                     <div className="nd-popular-badge">MOST POPULAR</div>
@@ -767,7 +738,10 @@ export default function Home() {
 
                   <h3>{plan.title}</h3>
 
-                  <div className="nd-price">{plan.price}</div>
+                  <div className="nd-price-block">
+                    <span className="nd-price-amount">{plan.price}</span>
+                    <span className="nd-price-period">{plan.period}</span>
+                  </div>
 
                   <p className="nd-price-description">{plan.description}</p>
 
@@ -775,14 +749,13 @@ export default function Home() {
                     {plan.features.map((feature) => (
                       <div key={feature}>
                         <span>✓</span>
-
                         <p>{feature}</p>
                       </div>
                     ))}
                   </div>
 
                   <Link to={getActionPath()} className="nd-price-btn">
-                    {isLoggedIn ? "Dashboard" : "Book This Seat"} <span>→</span>
+                    {isLoggedIn ? "Dashboard" : plan.cta} <span>→</span>
                   </Link>
                 </div>
               ))}
@@ -796,7 +769,6 @@ export default function Home() {
         </section>
 
         {/* ================= ABOUT ================= */}
-
         <section id="about" className="nd-about">
           <div className="nd-section-container nd-about-grid">
             <div
@@ -807,10 +779,8 @@ export default function Home() {
                 src="https://images.unsplash.com/photo-1568667256549-094345857637?auto=format&fit=crop&w=1000&q=90"
                 alt="New Drishti Library reading area"
               />
-
               <div className="nd-about-floating-card">
                 <strong>New Drishti</strong>
-
                 <span>Your place to focus.</span>
               </div>
             </div>
@@ -820,7 +790,6 @@ export default function Home() {
               className="nd-about-content nd-reveal nd-reveal-right"
             >
               <span className="nd-section-label">ABOUT NEW DRISHTI</span>
-
               <h2>
                 A Space Designed for Your <span>Dreams</span>
               </h2>
@@ -829,7 +798,6 @@ export default function Home() {
                 At New Drishti Library, we believe that the right environment
                 can make a huge difference in a student's preparation.
               </p>
-
               <p>
                 Our goal is simple — provide a clean, peaceful and disciplined
                 study space where students can spend their valuable time
@@ -839,37 +807,26 @@ export default function Home() {
               <div className="nd-about-points">
                 <div>
                   <span>✓</span>
-
                   <p>Dedicated study environment</p>
                 </div>
-
                 <div>
                   <span>✓</span>
-
                   <p>Comfortable individual seating</p>
                 </div>
-
                 <div>
                   <span>✓</span>
-
                   <p>Cool drinking water</p>
                 </div>
-
                 <div>
                   <span>✓</span>
-
                   <p>Refreshment and lunch area</p>
                 </div>
-
                 <div>
                   <span>✓</span>
-
                   <p>Daily newspaper and current affairs</p>
                 </div>
-
                 <div>
                   <span>✓</span>
-
                   <p>24×7 study access</p>
                 </div>
               </div>
@@ -877,28 +834,62 @@ export default function Home() {
           </div>
         </section>
 
-        {/* ================= MOTIVATION ================= */}
+        {/* ================= GALLERY ================= */}
+        <section id="gallery" className="nd-gallery">
+          <div className="nd-section-container">
+            <div ref={addRevealRef} className="nd-section-heading nd-reveal">
+              <span className="nd-section-label">OUR STUDY SPACE</span>
+              <h2>
+                A Glimpse of <span>Our Environment</span>
+              </h2>
+              <p>
+                Discover the calm and disciplined atmosphere that helps students
+                stay focused, productive and motivated.
+              </p>
+            </div>
 
+            <div className="nd-gallery-grid">
+              {galleryPhotos.map((photo, index) => (
+                <div
+                  key={photo.title}
+                  ref={addRevealRef}
+                  className="nd-gallery-card nd-reveal"
+                  style={{ "--nd-delay": `${index * 80}ms` }}
+                >
+                  <div className="nd-gallery-image-wrap">
+                    <img src={photo.image} alt={photo.title} />
+                    <div className="nd-gallery-overlay">
+                      <span>{photo.category}</span>
+                      <h3>{photo.title}</h3>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <p className="nd-gallery-footer">
+              ✦ Real spaces, real students, real focus.
+            </p>
+          </div>
+        </section>
+
+        {/* ================= MOTIVATION QUOTE ================= */}
         <section className="nd-quote">
           <div className="nd-quote-overlay" />
-
           <div
             ref={addRevealRef}
             className="nd-section-container nd-quote-content nd-reveal"
           >
             <span>YOUR FUTURE IS BUILT ONE DAY AT A TIME.</span>
-
             <h2>
               Your Competition Is Studying.
               <br />
               <em>So Should You.</em>
             </h2>
-
             <p>
               One focused hour today can become the achievement you celebrate
               tomorrow.
             </p>
-
             <Link to={getActionPath()} className="nd-primary-btn">
               {isLoggedIn ? "Dashboard" : "Start Your Journey"} <span>→</span>
             </Link>
@@ -906,7 +897,6 @@ export default function Home() {
         </section>
 
         {/* ================= CONTACT ================= */}
-
         <section id="contact" className="nd-contact">
           <div className="nd-section-container nd-contact-grid">
             <div
@@ -914,23 +904,37 @@ export default function Home() {
               className="nd-contact-content nd-reveal nd-reveal-left"
             >
               <span className="nd-section-label">GET IN TOUCH</span>
-
               <h2>Have a Question?</h2>
-
               <p>
                 Want to know more about our seats, facilities, timings or
                 membership? Get in touch with New Drishti Library.
               </p>
 
-              <a href="tel:+915881299022" className="nd-phone">
+              <a href="tel:+916394468584" className="nd-phone">
                 <span>📞</span>
-
                 <div>
                   <small>Call Us</small>
-
                   <strong>6394468584</strong>
                 </div>
               </a>
+
+              <div className="nd-contact-extra">
+                <div className="nd-contact-extra-item">
+                  <span>📍</span>
+                  <div>
+                    <small>Visit Us</small>
+                    <strong>New Drishti Library</strong>
+                  </div>
+                </div>
+
+                <div className="nd-contact-extra-item">
+                  <span>⏰</span>
+                  <div>
+                    <small>Open Hours</small>
+                    <strong>24 × 7 Open</strong>
+                  </div>
+                </div>
+              </div>
             </div>
 
             <div
@@ -938,14 +942,11 @@ export default function Home() {
               className="nd-contact-card nd-reveal nd-reveal-right"
             >
               <div className="nd-contact-card-icon">📚</div>
-
               <h3>Ready to Start Studying?</h3>
-
               <p>
                 Create your account and book your seat to begin your study
                 journey at New Drishti Library.
               </p>
-
               <Link to={getActionPath()} className="nd-primary-btn">
                 {actionLabel} <span>→</span>
               </Link>
@@ -955,7 +956,6 @@ export default function Home() {
       </main>
 
       {/* ================= FOOTER ================= */}
-
       <footer className="nd-footer">
         <div className="nd-section-container nd-footer-grid">
           <div className="nd-footer-brand">
@@ -972,10 +972,8 @@ export default function Home() {
                   }}
                 />
               </span>
-
               <span className="nd-logo-text">
                 <strong>New Drishti</strong>
-
                 <small>LIBRARY</small>
               </span>
             </Link>
@@ -987,14 +985,12 @@ export default function Home() {
 
           <div className="nd-footer-column">
             <h4>Quick Links</h4>
-
             {navItems.map(([id, label]) => (
               <a
                 href={`#${id}`}
                 key={id}
                 onClick={(event) => {
                   event.preventDefault();
-
                   scrollToSection(id);
                 }}
               >
@@ -1005,13 +1001,9 @@ export default function Home() {
 
           <div className="nd-footer-column">
             <h4>Student</h4>
-
             <Link to="/login">Login</Link>
 
-            <Link to="/register">Register</Link>
-
             <Link to="/login">Book Your Seat</Link>
-
             <Link to="/admin/login" className="footer-admin-link">
               Admin Login
             </Link>
@@ -1019,11 +1011,8 @@ export default function Home() {
 
           <div className="nd-footer-column">
             <h4>Contact</h4>
-
-            <a href="tel:+915881299022">📞 6394468584</a>
-
+            <a href="tel:+916394468584">📞 6394468584</a>
             <span>📚 New Drishti Library</span>
-
             <span>⏰ Open 24×7</span>
           </div>
         </div>
@@ -1033,7 +1022,6 @@ export default function Home() {
             © {new Date().getFullYear()} New Drishti Library. All Rights
             Reserved.
           </p>
-
           <p>Built for students. Built for success.</p>
         </div>
       </footer>

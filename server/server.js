@@ -56,16 +56,23 @@ app.use(
  * =====================================================
  */
 
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://new-drishti-library.gangwarratnesh124.workers.dev",
+];
+
 app.use(
   cors({
-    origin:
-      process.env.CLIENT_URL ||
-      "http://localhost:5173",
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        return callback(null, true);
+      }
 
+      return callback(new Error("Not allowed by CORS"));
+    },
     credentials: true,
   }),
 );
-
 /*
  * =====================================================
  * BODY PARSERS
@@ -101,15 +108,9 @@ app.use(morgan("dev"));
  * karega.
  */
 
-const serverUploadDirectory = path.join(
-  __dirname,
-  "uploads",
-);
+const serverUploadDirectory = path.join(__dirname, "uploads");
 
-app.use(
-  "/uploads",
-  express.static(serverUploadDirectory),
-);
+app.use("/uploads", express.static(serverUploadDirectory));
 
 /*
  * =====================================================
@@ -125,19 +126,12 @@ app.use(
  * Isse existing uploaded photos/documents break nahi honge.
  */
 
-const legacyUploadDirectory = path.join(
-  process.cwd(),
-  "uploads",
-);
+const legacyUploadDirectory = path.join(process.cwd(), "uploads");
 
 if (
-  path.resolve(legacyUploadDirectory) !==
-  path.resolve(serverUploadDirectory)
+  path.resolve(legacyUploadDirectory) !== path.resolve(serverUploadDirectory)
 ) {
-  app.use(
-    "/uploads",
-    express.static(legacyUploadDirectory),
-  );
+  app.use("/uploads", express.static(legacyUploadDirectory));
 }
 
 /*
@@ -150,37 +144,25 @@ if (
  * STUDENT
  */
 
-app.use(
-  "/api/students",
-  studentRoutes,
-);
+app.use("/api/students", studentRoutes);
 
 /*
  * SEATS
  */
 
-app.use(
-  "/api/seats",
-  seatRoutes,
-);
+app.use("/api/seats", seatRoutes);
 
 /*
  * SEAT REQUESTS
  */
 
-app.use(
-  "/api/seat-requests",
-  seatRequestRoutes,
-);
+app.use("/api/seat-requests", seatRequestRoutes);
 
 /*
  * ADMIN
  */
 
-app.use(
-  "/api/admin",
-  adminRoutes,
-);
+app.use("/api/admin", adminRoutes);
 
 /*
  * =====================================================
@@ -192,8 +174,7 @@ app.get("/", (req, res) => {
   res.status(200).json({
     success: true,
 
-    message:
-      "Library Management System API is running",
+    message: "Library Management System API is running",
   });
 });
 
@@ -207,8 +188,7 @@ app.use((req, res) => {
   res.status(404).json({
     success: false,
 
-    message:
-      `Route not found: ${req.method} ${req.originalUrl}`,
+    message: `Route not found: ${req.method} ${req.originalUrl}`,
   });
 });
 
@@ -219,19 +199,12 @@ app.use((req, res) => {
  */
 
 app.use((err, req, res, next) => {
-  console.error(
-    "GLOBAL ERROR:",
-    err,
-  );
+  console.error("GLOBAL ERROR:", err);
 
-  res.status(
-    err.status || 500,
-  ).json({
+  res.status(err.status || 500).json({
     success: false,
 
-    message:
-      err.message ||
-      "Internal server error",
+    message: err.message || "Internal server error",
   });
 });
 
@@ -241,31 +214,18 @@ app.use((err, req, res, next) => {
  * =====================================================
  */
 
-const PORT =
-  process.env.PORT || 5000;
+const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
-  console.log(
-    "=================================",
-  );
+  console.log("=================================");
 
-  console.log(
-    `Server running on http://localhost:${PORT}`,
-  );
+  console.log(`Server running on http://localhost:${PORT}`);
 
-  console.log(
-    `Uploads served from: ${serverUploadDirectory}`,
-  );
+  console.log(`Uploads served from: ${serverUploadDirectory}`);
 
-  console.log(
-    "Admin API:",
-  );
+  console.log("Admin API:");
 
-  console.log(
-    `http://localhost:${PORT}/api/admin`,
-  );
+  console.log(`http://localhost:${PORT}/api/admin`);
 
-  console.log(
-    "=================================",
-  );
+  console.log("=================================");
 });

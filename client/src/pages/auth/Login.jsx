@@ -53,15 +53,12 @@ export default function Login() {
   return (
     <div className="auth-page">
       <div className="auth-container">
-        {/* LEFT SIDE */}
+        {/* ================= LEFT SIDE (VISUAL) ================= */}
         <div className="auth-visual">
           <div className="auth-visual-overlay"></div>
 
           <div className="auth-visual-content">
-            <Link to="/" className="auth-home-link">
-              ← Back to Home
-            </Link>
-
+            {/* BRAND */}
             <div className="visual-brand">
               <div className="visual-brand-icon">
                 <img
@@ -83,6 +80,7 @@ export default function Login() {
               </div>
             </div>
 
+            {/* MAIN CONTENT */}
             <div className="visual-main">
               <span className="visual-badge">✦ YOUR STUDY SPACE</span>
 
@@ -124,6 +122,7 @@ export default function Login() {
               </div>
             </div>
 
+            {/* QUOTE */}
             <div className="visual-quote">
               <span>“</span>
               <p>
@@ -134,9 +133,10 @@ export default function Login() {
           </div>
         </div>
 
-        {/* RIGHT SIDE */}
+        {/* ================= RIGHT SIDE (FORM) ================= */}
         <div className="auth-form-side">
           <div className="auth-card">
+            {/* MOBILE BRAND */}
             <div className="auth-brand mobile-brand">
               <div className="brand-icon">
                 <img
@@ -158,14 +158,16 @@ export default function Login() {
               </div>
             </div>
 
+            {/* HEADER — ab sirf STUDENT LOGIN */}
             <div className="auth-header">
-              <span className="login-small-label">STUDENT / ADMIN LOGIN</span>
+              <span className="login-small-label">STUDENT LOGIN</span>
 
               <h2>Welcome Back 👋</h2>
 
               <p>Login to access your library account</p>
             </div>
 
+            {/* ERROR */}
             {error && (
               <div className="error-message">
                 <span>⚠️</span>
@@ -173,6 +175,7 @@ export default function Login() {
               </div>
             )}
 
+            {/* FORM */}
             <form onSubmit={handleSubmit}>
               <div className="form-group">
                 <label htmlFor="email">Email Address</label>
@@ -229,16 +232,27 @@ export default function Login() {
               </button>
             </form>
 
+            {/* ================= BACK TO HOME — SIGN IN KE NICHE ================= */}
+            <div className="auth-back-home-wrap">
+              <Link to="/" className="auth-back-home-button">
+                <span className="auth-back-home-arrow">←</span>
+                Back to Home
+              </Link>
+            </div>
+
+            {/* DIVIDER */}
             <div className="auth-divider">
               <span>NEW TO NEW DRISHTI?</span>
             </div>
 
+            {/* FOOTER */}
             <div className="auth-footer">
               <span>Don't have an account?</span>
 
               <Link to="/register">Create Account →</Link>
             </div>
 
+            {/* SECURITY */}
             <div className="login-security">
               <span>🔐</span>
               <p>Your account information is securely protected.</p>
