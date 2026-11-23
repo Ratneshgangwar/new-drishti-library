@@ -3,6 +3,7 @@ const cors = require("cors");
 const dotenv = require("dotenv");
 const helmet = require("helmet");
 const morgan = require("morgan");
+const path = require("path");
 
 dotenv.config();
 
@@ -48,23 +49,39 @@ app.use(
 );
 
 // BODY PARSERS
-app.use(express.json());
+app.use(express.json({ limit: "10mb" }));
 app.use(
   express.urlencoded({
     extended: true,
+    limit: "10mb",
   }),
 );
 
 // LOGGER
 app.use(morgan("dev"));
 
-// R2 CONFIG CHECK (never print secret values)
+// LEGACY LOCAL UPLOADS
+// Keeps old /uploads URLs working if files still exist.
+// New uploads should be stored in Cloudflare R2.
+const serverUploadDirectory = path.join(__dirname, "uploads");
+const legacyUploadDirectory = path.join(process.cwd(), "uploads");
+
+app.use("/uploads", express.static(serverUploadDirectory));
+
+if (
+  path.resolve(legacyUploadDirectory) !== path.resolve(serverUploadDirectory)
+) {
+  app.use("/uploads", express.static(legacyUploadDirectory));
+}
+
+// R2 CONFIG CHECK
+// Never print actual credentials.
 console.log("R2 CONFIG CHECK:", {
   accountId: Boolean(process.env.R2_ACCOUNT_ID),
   accessKey: Boolean(process.env.R2_ACCESS_KEY_ID),
   secretKey: Boolean(process.env.R2_SECRET_ACCESS_KEY),
   bucket: Boolean(process.env.R2_BUCKET_NAME),
-  endpoint: Boolean(process.env.R2_ENDPOINT),
+  endpoint: Boolean(process.env.R2_ENDPOINT || process.env.R2_ACCOUNT_ID),
 });
 
 // API ROUTES
@@ -93,9 +110,11 @@ app.use((req, res) => {
 app.use((err, req, res, next) => {
   console.error("GLOBAL ERROR:", err.message);
 
-  res.status(err.status || 500).json({
+  const statusCode = err.status || err.statusCode || 500;
+
+  res.status(statusCode).json({
     success: false,
-    message: err.message || "Internal server error",
+    message: statusCode === 500 ? "Internal server error" : err.message,
   });
 });
 
@@ -105,6 +124,6 @@ const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log("=================================");
   console.log(`Server running on port ${PORT}`);
-  console.log("Cloudflare R2 storage enabled");
+  console.log("Cloudflare R2 storage configured");
   console.log("=================================");
 });
